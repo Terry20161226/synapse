@@ -9,6 +9,10 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
 [![Zero Config](https://img.shields.io/badge/Config-Zero-brightgreen.svg)]()
 
+<p align="center">
+  <img src="assets/demo.gif" alt="Synapse Live Context Sync Demo" width="850">
+</p>
+
 ---
 
 ## ⚡ The Problem
