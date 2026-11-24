@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "projectName": "synapse",
+  "activeGoal": "Build viral open source project Synapse",
+  "conventions": [],
+  "decisions": [
+    {
+      "agent": "User/CLI",
+      "title": "Selected TypeScript and MCP stdio architecture",
+      "id": "dec-1795504084261",
+      "timestamp": "2026-11-24T07:08:04.261Z"
+    }
+  ],
+  "lastUpdated": "2026-11-24T07:08:04.261Z"
+}

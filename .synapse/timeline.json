@@ -1,0 +1,16 @@
+[
+  {
+    "id": "evt-1795504084261",
+    "timestamp": "2026-11-24T07:08:04.261Z",
+    "agent": "User/CLI",
+    "type": "decision",
+    "summary": "Decision: Selected TypeScript and MCP stdio architecture"
+  },
+  {
+    "id": "evt-1795504084148",
+    "timestamp": "2026-11-24T07:08:04.148Z",
+    "agent": "User/CLI",
+    "type": "milestone",
+    "summary": "Active goal updated: Build viral open source project Synapse"
+  }
+]
