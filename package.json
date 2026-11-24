@@ -22,8 +22,16 @@
     "context",
     "shared-memory"
   ],
-  "author": "",
+  "author": "Terry20161226",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Terry20161226/synapse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Terry20161226/synapse/issues"
+  },
+  "homepage": "https://github.com/Terry20161226/synapse#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.6.0",
     "zod": "^3.24.2"
