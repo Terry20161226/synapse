@@ -1,11 +1,11 @@
 {
   "name": "synapse-agent",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Cross-agent shared memory and context engine for Cursor, Claude Code, Windsurf, and more.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "synapse": "./dist/cli.js"
+    "synapse": "dist/cli.js"
   },
   "scripts": {
     "build": "tsc && chmod +x dist/cli.js",
@@ -32,7 +32,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Terry20161226/synapse.git"
+    "url": "git+https://github.com/Terry20161226/synapse.git"
   },
   "bugs": {
     "url": "https://github.com/Terry20161226/synapse/issues"
