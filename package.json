@@ -5,7 +5,8 @@
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "synapse": "dist/cli.js"
+    "synapse-agent": "./dist/cli.js",
+    "synapse": "./dist/cli.js"
   },
   "scripts": {
     "build": "tsc && chmod +x dist/cli.js",

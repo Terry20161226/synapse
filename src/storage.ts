@@ -1,6 +1,26 @@
 import * as fs from 'node:fs';
+import * as os from 'node:os';
 import * as path from 'node:path';
 import type { ActiveFileChange, BlackboardState, Decision, TimelineEvent } from './types.js';
+
+export function findProjectRoot(startDir: string = process.cwd()): string {
+  try {
+    let curr = path.resolve(startDir);
+    while (curr !== '/' && curr !== path.dirname(curr)) {
+      if (
+        fs.existsSync(path.join(curr, '.git')) ||
+        fs.existsSync(path.join(curr, '.synapse')) ||
+        fs.existsSync(path.join(curr, 'package.json'))
+      ) {
+        return curr;
+      }
+      curr = path.dirname(curr);
+    }
+  } catch {
+    // fallback
+  }
+  return startDir === '/' ? os.homedir() : startDir;
+}
 
 export class SynapseStorage {
   private baseDir: string;
@@ -9,8 +29,8 @@ export class SynapseStorage {
   private timelinePath: string;
   private contextMdPath: string;
 
-  constructor(workspaceDir: string = process.cwd()) {
-    this.baseDir = workspaceDir;
+  constructor(workspaceDir: string = process.cwd(), findRoot: boolean = true) {
+    this.baseDir = findRoot ? findProjectRoot(workspaceDir) : workspaceDir;
     this.synapseDir = path.join(this.baseDir, '.synapse');
     this.blackboardPath = path.join(this.synapseDir, 'blackboard.json');
     this.timelinePath = path.join(this.synapseDir, 'timeline.json');

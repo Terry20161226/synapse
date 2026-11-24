@@ -14,7 +14,7 @@ async function runVerification() {
   try {
     // 1. Test Storage & Initialization
     console.log('1. Testing Synapse Storage Engine...');
-    const storage = new SynapseStorage(testDir);
+    const storage = new SynapseStorage(testDir, false);
     const initialBlackboard = storage.getBlackboard();
     console.log('   ✓ Blackboard initialized:', initialBlackboard.projectName);
 

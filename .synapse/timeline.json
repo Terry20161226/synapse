@@ -1,5 +1,34 @@
 [
   {
+    "id": "evt-1795506227286",
+    "timestamp": "2026-11-24T07:43:47.286Z",
+    "agent": "Claude Code",
+    "type": "decision",
+    "summary": "Decision: Switched from bcrypt to argon2id for password hashing",
+    "details": "Argon2id is memory-hard and recommended by OWASP 2026"
+  },
+  {
+    "id": "evt-1795506227285",
+    "timestamp": "2026-11-24T07:43:47.285Z",
+    "agent": "Developer",
+    "type": "note",
+    "summary": "Added project convention: Never commit .env files"
+  },
+  {
+    "id": "evt-1795506227284",
+    "timestamp": "2026-11-24T07:43:47.284Z",
+    "agent": "Cursor",
+    "type": "note",
+    "summary": "Added project convention: Always use TypeScript strict mode"
+  },
+  {
+    "id": "evt-1795506227283",
+    "timestamp": "2026-11-24T07:43:47.283Z",
+    "agent": "Claude Code",
+    "type": "milestone",
+    "summary": "Active goal updated: Re-architecting database to PostgreSQL with Drizzle ORM"
+  },
+  {
     "id": "evt-1795504084261",
     "timestamp": "2026-11-24T07:08:04.261Z",
     "agent": "User/CLI",
