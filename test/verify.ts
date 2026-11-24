@@ -73,6 +73,16 @@ async function runVerification() {
     }
     console.log('   ✓ Configurator successfully generated .cursor/mcp.json and .cursorrules');
 
+    // 8. Test Live TUI Dashboard rendering
+    console.log('8. Testing Live TUI Dashboard Rendering...');
+    const { SynapseDashboard } = await import('../src/ui.js');
+    const dashboard = new SynapseDashboard(testDir);
+    const rendered = dashboard.renderToString();
+    if (!rendered.includes('SYNAPSE LIVE CONTEXT MONITOR') || !rendered.includes('ACTIVE WORKING TREE')) {
+      throw new Error('Dashboard renderToString did not produce expected UI layout');
+    }
+    console.log('   ✓ Dashboard frame successfully rendered with box borders');
+
     console.log('\n🎉 ALL VERIFICATION TESTS PASSED SUCCESSFULLY!');
   } finally {
     // Clean up test workspace

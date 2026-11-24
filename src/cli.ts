@@ -3,13 +3,21 @@ import { SynapseServer } from './server.js';
 import { SynapseStorage } from './storage.js';
 import { SynapseWatcher } from './watcher.js';
 import { SynapseConfigurator } from './configurator.js';
+import { SynapseDashboard } from './ui.js';
 
 const args = process.argv.slice(2);
 const command = args[0];
 
 const storage = new SynapseStorage(process.cwd());
 
-if (command === 'init') {
+if (command === 'watch' || command === 'ui') {
+  const dashboard = new SynapseDashboard(process.cwd());
+  dashboard.start().catch((err) => {
+    console.error('Failed to start Synapse Dashboard:', err);
+    process.exit(1);
+  });
+  // keep process running
+} else if (command === 'init') {
   console.log('\n🧠 \x1b[1m\x1b[36mInitializing Synapse in current project...\x1b[0m');
   const configurator = new SynapseConfigurator(process.cwd());
   const res = configurator.initAll();

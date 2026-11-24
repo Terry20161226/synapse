@@ -108,6 +108,9 @@ claude mcp add synapse npx -y synapse-agent
 You can also inspect or update the shared brain directly from your terminal:
 
 ```bash
+# Launch the live cyberpunk terminal monitor dashboard
+npx synapse watch
+
 # Check the shared project context and recent agent decisions
 npx synapse status
 
