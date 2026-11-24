@@ -1,6 +1,6 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import type { BlackboardState, Decision, TimelineEvent } from './types.js';
+import type { ActiveFileChange, BlackboardState, Decision, TimelineEvent } from './types.js';
 
 export class SynapseStorage {
   private baseDir: string;
@@ -143,6 +143,14 @@ export class SynapseStorage {
     }
   }
 
+  public updateActiveChanges(changes: ActiveFileChange[]): void {
+    const state = this.getBlackboard();
+    state.activeChanges = changes;
+    state.lastUpdated = new Date().toISOString();
+    this.writeJsonAtomic(this.blackboardPath, state);
+    this.regenerateContextMd();
+  }
+
   public getContextMarkdown(): string {
     if (fs.existsSync(this.contextMdPath)) {
       return fs.readFileSync(this.contextMdPath, 'utf-8');
@@ -189,6 +197,14 @@ export class SynapseStorage {
       });
     } else {
       lines.push('- No recent activity logged.');
+    }
+
+    if (state.activeChanges && state.activeChanges.length > 0) {
+      lines.push('', '## 🚧 Active In-Progress Changes (Uncommitted)');
+      lines.push('> *Live tracking of files currently being edited across sessions:*');
+      state.activeChanges.forEach((c) => {
+        lines.push(`- \`${c.path}\` (*${c.status}*, updated recently)`);
+      });
     }
 
     lines.push('', '---', '*Generated automatically by Synapse. Synced across all AI agents.*');

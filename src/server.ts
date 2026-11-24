@@ -4,19 +4,24 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
-import { z } from 'zod';
+import { exec } from 'node:child_process';
+import { promisify } from 'node:util';
 import { SynapseStorage } from './storage.js';
+
+const execAsync = promisify(exec);
 
 export class SynapseServer {
   private server: Server;
   private storage: SynapseStorage;
+  private workspaceDir: string;
 
   constructor(workspaceDir: string = process.cwd()) {
+    this.workspaceDir = workspaceDir;
     this.storage = new SynapseStorage(workspaceDir);
     this.server = new Server(
       {
         name: 'synapse-context-engine',
-        version: '0.1.0',
+        version: '0.2.0',
       },
       {
         capabilities: {
@@ -114,6 +119,22 @@ export class SynapseServer {
               required: ['convention'],
             },
           },
+          {
+            name: 'synapse_get_recent_diffs',
+            description:
+              'Inspect recently modified files and git diffs across the project. Use this to understand what other agents or the developer recently touched.',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                target: {
+                  type: 'string',
+                  enum: ['uncommitted', 'stat', 'last_commit'],
+                  description:
+                    'Scope of diff: "uncommitted" (unstaged/staged changes, default), "stat" (summary of changed files), or "last_commit"',
+                },
+              },
+            },
+          },
         ],
       };
     });
@@ -200,6 +221,35 @@ export class SynapseServer {
                 },
               ],
             };
+          }
+
+          case 'synapse_get_recent_diffs': {
+            const target = (args?.target as string) || 'uncommitted';
+            let cmd = 'git diff';
+            if (target === 'stat') cmd = 'git status -s';
+            if (target === 'last_commit') cmd = 'git show --stat';
+
+            try {
+              const { stdout } = await execAsync(cmd, { cwd: this.workspaceDir });
+              const output = stdout.trim() || 'No recent diffs detected in working tree.';
+              return {
+                content: [
+                  {
+                    type: 'text',
+                    text: output,
+                  },
+                ],
+              };
+            } catch (err) {
+              return {
+                content: [
+                  {
+                    type: 'text',
+                    text: `Unable to read diffs: ${err instanceof Error ? err.message : String(err)}`,
+                  },
+                ],
+              };
+            }
           }
 
           default:

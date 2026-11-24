@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "synapse": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "synapse-agent"
+      ]
+    }
+  }
+}

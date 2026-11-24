@@ -50,7 +50,23 @@ When Agent A makes a breakthrough, Agent B knows it instantly.
 
 ---
 
-## 🚀 Quickstart (60 Seconds)
+## ⚡ Instant Setup (One Command)
+
+Inside any project root, run:
+
+```bash
+npx synapse-agent init
+```
+
+This single command automatically:
+- 🔌 Injects Synapse into `.cursor/mcp.json`
+- 📜 Injects context-awareness guidelines into `.cursorrules`
+- 🖥️ Connects to Claude Desktop configuration (if installed)
+- 📁 Initializes your local `.synapse/` shared brain
+
+---
+
+## 🚀 Manual Quickstart (60 Seconds)
 
 ### 1. Add to Cursor
 Add Synapse to your `.cursor/mcp.json` (or Global Cursor Settings):

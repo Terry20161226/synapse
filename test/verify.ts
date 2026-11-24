@@ -52,6 +52,27 @@ async function runVerification() {
     }
     console.log('   ✓ Physical disk file verified at:', contextMdPath);
 
+    // 6. Test Active File Change Tracking
+    console.log('6. Testing Active File Change Tracking...');
+    storage.updateActiveChanges([
+      { path: 'src/auth/jwt.ts', status: 'modified', lastSeen: new Date().toISOString() },
+    ]);
+    const updatedMd = storage.getContextMarkdown();
+    if (!updatedMd.includes('src/auth/jwt.ts')) {
+      throw new Error('context.md missing active in-progress files section');
+    }
+    console.log('   ✓ Live active changes properly rendered into context.md');
+
+    // 7. Test Configurator (init command)
+    console.log('7. Testing Zero-Config Configurator...');
+    const { SynapseConfigurator } = await import('../src/configurator.js');
+    const configurator = new SynapseConfigurator(testDir);
+    const configResult = configurator.initAll();
+    if (!configResult.cursorMcp || !configResult.cursorRules) {
+      throw new Error('Configurator failed to create .cursor/mcp.json or .cursorrules');
+    }
+    console.log('   ✓ Configurator successfully generated .cursor/mcp.json and .cursorrules');
+
     console.log('\n🎉 ALL VERIFICATION TESTS PASSED SUCCESSFULLY!');
   } finally {
     // Clean up test workspace

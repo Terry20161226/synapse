@@ -2,11 +2,33 @@
 import { SynapseServer } from './server.js';
 import { SynapseStorage } from './storage.js';
 import { SynapseWatcher } from './watcher.js';
+import { SynapseConfigurator } from './configurator.js';
 
 const args = process.argv.slice(2);
 const command = args[0];
 
 const storage = new SynapseStorage(process.cwd());
+
+if (command === 'init') {
+  console.log('\n🧠 \x1b[1m\x1b[36mInitializing Synapse in current project...\x1b[0m');
+  const configurator = new SynapseConfigurator(process.cwd());
+  const res = configurator.initAll();
+
+  console.log(`📁 Local .synapse context directory initialized.`);
+  if (res.cursorMcp) {
+    console.log(`  \x1b[32m✓\x1b[0m Injected Synapse into \x1b[1m.cursor/mcp.json\x1b[0m`);
+  }
+  if (res.cursorRules) {
+    console.log(`  \x1b[32m✓\x1b[0m Injected shared context rules into \x1b[1m.cursorrules\x1b[0m`);
+  }
+  if (res.claudeDesktop) {
+    console.log(`  \x1b[32m✓\x1b[0m Injected Synapse into \x1b[1mClaude Desktop configuration\x1b[0m`);
+  }
+
+  console.log('\n\x1b[32m🎉 Synapse ready! Your Cursor and Claude Code are now linked.\x1b[0m');
+  console.log('Run \x1b[36mnpx synapse status\x1b[0m to see the shared blackboard anytime.\n');
+  process.exit(0);
+}
 
 if (command === 'status') {
   const blackboard = storage.getBlackboard();

@@ -11,9 +11,15 @@ export interface TimelineEvent {
   id: string;
   timestamp: string;
   agent: string;
-  type: 'decision' | 'file_change' | 'milestone' | 'note';
+  type: 'decision' | 'file_change' | 'milestone' | 'note' | 'collision_warning';
   summary: string;
   details?: string;
+}
+
+export interface ActiveFileChange {
+  path: string;
+  status: 'modified' | 'added' | 'deleted';
+  lastSeen: string;
 }
 
 export interface BlackboardState {
@@ -22,6 +28,7 @@ export interface BlackboardState {
   activeGoal: string;
   conventions: string[];
   decisions: Decision[];
+  activeChanges?: ActiveFileChange[];
   lastUpdated: string;
 }
 
