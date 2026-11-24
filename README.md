@@ -3,6 +3,8 @@
 > **Stop repeating yourself. Give your Cursor, Claude Code, Windsurf, and CLI agents a shared brain.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/Terry20161226/synapse/actions/workflows/ci.yml/badge.svg)](https://github.com/Terry20161226/synapse/actions)
+[![npm version](https://img.shields.io/npm/v/synapse-agent.svg)](https://www.npmjs.com/package/synapse-agent)
 [![MCP Protocol](https://img.shields.io/badge/Protocol-MCP-orange.svg)](https://modelcontextprotocol.io)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
 [![Zero Config](https://img.shields.io/badge/Config-Zero-brightgreen.svg)]()

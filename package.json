@@ -11,8 +11,14 @@
     "build": "tsc && chmod +x dist/cli.js",
     "dev": "tsx src/cli.ts",
     "start": "node dist/cli.js",
-    "test": "tsx test/verify.ts"
+    "test": "tsx test/verify.ts",
+    "prepublishOnly": "npm run build && npm test"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "keywords": [
     "mcp",
     "ai-agent",
