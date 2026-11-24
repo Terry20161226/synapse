@@ -1,5 +1,0 @@
-
-# --- SYNAPSE SHARED CONTEXT DIRECTIVE ---
-Always read .synapse/context.md or invoke synapse_get_context before starting work to stay in sync with other AI agents.
-When making significant architectural decisions, log them with synapse_log_decision.
-# --- END SYNAPSE DIRECTIVE ---

@@ -64,14 +64,21 @@ async function runVerification() {
     console.log('   ✓ Live active changes properly rendered into context.md');
 
     // 7. Test Configurator (init command)
-    console.log('7. Testing Zero-Config Configurator...');
+    console.log('7. Testing Zero-Config Universal Agent Matrix Configurator...');
     const { SynapseConfigurator } = await import('../src/configurator.js');
     const configurator = new SynapseConfigurator(testDir);
     const configResult = configurator.initAll();
-    if (!configResult.cursorMcp || !configResult.cursorRules) {
-      throw new Error('Configurator failed to create .cursor/mcp.json or .cursorrules');
+    if (
+      !configResult.cursorMcp ||
+      !configResult.cursorRules ||
+      !configResult.claudeMd ||
+      !configResult.agentsMd ||
+      !configResult.windsurfRules ||
+      !configResult.clineRules
+    ) {
+      throw new Error('Configurator failed to create full universal agent matrix files');
     }
-    console.log('   ✓ Configurator successfully generated .cursor/mcp.json and .cursorrules');
+    console.log('   ✓ Configurator successfully generated all agent rule files (Cursor, Claude, Codex, Windsurf, Cline)');
 
     // 8. Test Live TUI Dashboard rendering
     console.log('8. Testing Live TUI Dashboard Rendering...');

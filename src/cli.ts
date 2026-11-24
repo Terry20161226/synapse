@@ -18,23 +18,19 @@ if (command === 'watch' || command === 'ui') {
   });
   // keep process running
 } else if (command === 'init') {
-  console.log('\n🧠 \x1b[1m\x1b[36mInitializing Synapse in current project...\x1b[0m');
+  console.log('\n🧠 \x1b[1m\x1b[36mInitializing Synapse Universal Agent Matrix...\x1b[0m');
   const configurator = new SynapseConfigurator(process.cwd());
   const res = configurator.initAll();
 
   console.log(`📁 Local .synapse context directory initialized.`);
-  if (res.cursorMcp) {
-    console.log(`  \x1b[32m✓\x1b[0m Injected Synapse into \x1b[1m.cursor/mcp.json\x1b[0m`);
-  }
-  if (res.cursorRules) {
-    console.log(`  \x1b[32m✓\x1b[0m Injected shared context rules into \x1b[1m.cursorrules\x1b[0m`);
-  }
-  if (res.claudeDesktop) {
-    console.log(`  \x1b[32m✓\x1b[0m Injected Synapse into \x1b[1mClaude Desktop configuration\x1b[0m`);
-  }
+  console.log(`  \x1b[32m✓\x1b[0m \x1b[1m[Cursor]\x1b[0m      .cursor/mcp.json & .cursorrules`);
+  console.log(`  \x1b[32m✓\x1b[0m \x1b[1m[Claude Code]\x1b[0m CLAUDE.md & Claude Desktop config`);
+  console.log(`  \x1b[32m✓\x1b[0m \x1b[1m[Codex & AGY]\x1b[0m AGENTS.md`);
+  console.log(`  \x1b[32m✓\x1b[0m \x1b[1m[Windsurf]\x1b[0m    .windsurfrules`);
+  console.log(`  \x1b[32m✓\x1b[0m \x1b[1m[Cline]\x1b[0m       .clinerules`);
 
-  console.log('\n\x1b[32m🎉 Synapse ready! Your Cursor and Claude Code are now linked.\x1b[0m');
-  console.log('Run \x1b[36mnpx synapse status\x1b[0m to see the shared blackboard anytime.\n');
+  console.log('\n\x1b[32m🎉 Synapse ready! All your AI agents are now sharing the same brain.\x1b[0m');
+  console.log('Run \x1b[36mnpx synapse status\x1b[0m or \x1b[36mnpx synapse watch\x1b[0m anytime.\n');
   process.exit(0);
 }
 

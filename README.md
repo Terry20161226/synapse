@@ -50,7 +50,7 @@ When Agent A makes a breakthrough, Agent B knows it instantly.
 
 ---
 
-## ⚡ Instant Setup (One Command)
+## ⚡ Instant Setup (Universal Agent Matrix)
 
 Inside any project root, run:
 
@@ -58,11 +58,13 @@ Inside any project root, run:
 npx synapse-agent init
 ```
 
-This single command automatically:
-- 🔌 Injects Synapse into `.cursor/mcp.json`
-- 📜 Injects context-awareness guidelines into `.cursorrules`
-- 🖥️ Connects to Claude Desktop configuration (if installed)
-- 📁 Initializes your local `.synapse/` shared brain
+This single command automatically aligns your entire AI agent workforce:
+- 🔌 **Cursor**: Injects MCP server into `.cursor/mcp.json` and updates `.cursorrules`
+- 📜 **Claude Code**: Creates/updates `CLAUDE.md` and Claude Desktop configuration
+- 🤖 **Codex & Antigravity (AGY)**: Creates/updates `AGENTS.md`
+- 🏄 **Windsurf**: Creates/updates `.windsurfrules`
+- ⚡ **Cline / Roo Code**: Creates/updates `.clinerules`
+- 📁 **Synapse Shared Core**: Initializes `.synapse/` with real-time markdown timeline
 
 ---
 

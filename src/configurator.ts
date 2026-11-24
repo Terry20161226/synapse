@@ -2,6 +2,16 @@ import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
 
+export interface ConfigurationResults {
+  cursorMcp: boolean;
+  cursorRules: boolean;
+  claudeMd: boolean;
+  claudeDesktop: boolean;
+  agentsMd: boolean;
+  windsurfRules: boolean;
+  clineRules: boolean;
+}
+
 export class SynapseConfigurator {
   private workspaceDir: string;
 
@@ -9,18 +19,46 @@ export class SynapseConfigurator {
     this.workspaceDir = workspaceDir;
   }
 
-  public initAll(): {
-    cursorMcp: boolean;
-    claudeDesktop: boolean;
-    cursorRules: boolean;
-  } {
-    const results = {
+  private injectDirective(filePath: string, header: string = ''): boolean {
+    const directive = [
+      '',
+      '# --- SYNAPSE SHARED CONTEXT ---',
+      'Always read .synapse/context.md or invoke synapse_get_context before starting work to stay in sync with other AI agents.',
+      'When making significant architectural decisions or completing major milestones, record them using synapse_log_decision or `npx synapse log "<decision>"`.',
+      '# --- END SYNAPSE DIRECTIVE ---',
+      '',
+    ].join('\n');
+
+    try {
+      if (fs.existsSync(filePath)) {
+        const content = fs.readFileSync(filePath, 'utf-8');
+        if (!content.includes('SYNAPSE SHARED CONTEXT')) {
+          fs.appendFileSync(filePath, directive, 'utf-8');
+          return true;
+        }
+        return false;
+      } else {
+        const initialContent = header ? `${header}\n${directive}` : directive;
+        fs.writeFileSync(filePath, initialContent, 'utf-8');
+        return true;
+      }
+    } catch {
+      return false;
+    }
+  }
+
+  public initAll(): ConfigurationResults {
+    const results: ConfigurationResults = {
       cursorMcp: false,
-      claudeDesktop: false,
       cursorRules: false,
+      claudeMd: false,
+      claudeDesktop: false,
+      agentsMd: false,
+      windsurfRules: false,
+      clineRules: false,
     };
 
-    // 1. Configure Cursor Workspace MCP (.cursor/mcp.json)
+    // 1. Cursor: .cursor/mcp.json & .cursorrules
     try {
       const cursorDir = path.join(this.workspaceDir, '.cursor');
       if (!fs.existsSync(cursorDir)) {
@@ -49,7 +87,17 @@ export class SynapseConfigurator {
       // ignore
     }
 
-    // 2. Configure Claude Desktop global config if directory exists
+    results.cursorRules = this.injectDirective(
+      path.join(this.workspaceDir, '.cursorrules'),
+      '# Cursor Rules with Synapse Shared Context'
+    );
+
+    // 2. Claude Code: CLAUDE.md & Claude Desktop config
+    results.claudeMd = this.injectDirective(
+      path.join(this.workspaceDir, 'CLAUDE.md'),
+      '# Claude Code Project Guidelines'
+    );
+
     try {
       let claudeConfigDir = '';
       if (process.platform === 'darwin') {
@@ -99,31 +147,23 @@ export class SynapseConfigurator {
       // ignore
     }
 
-    // 3. Inject Cursor Rules (.cursorrules)
-    try {
-      const cursorRulesPath = path.join(this.workspaceDir, '.cursorrules');
-      const directive = [
-        '',
-        '# --- SYNAPSE SHARED CONTEXT DIRECTIVE ---',
-        'Always read .synapse/context.md or invoke synapse_get_context before starting work to stay in sync with other AI agents.',
-        'When making significant architectural decisions, log them with synapse_log_decision.',
-        '# --- END SYNAPSE DIRECTIVE ---',
-        '',
-      ].join('\n');
+    // 3. Codex & AGY: AGENTS.md
+    results.agentsMd = this.injectDirective(
+      path.join(this.workspaceDir, 'AGENTS.md'),
+      '# Agent Guidelines & Context'
+    );
 
-      if (fs.existsSync(cursorRulesPath)) {
-        const existing = fs.readFileSync(cursorRulesPath, 'utf-8');
-        if (!existing.includes('SYNAPSE SHARED CONTEXT')) {
-          fs.appendFileSync(cursorRulesPath, directive, 'utf-8');
-          results.cursorRules = true;
-        }
-      } else {
-        fs.writeFileSync(cursorRulesPath, directive, 'utf-8');
-        results.cursorRules = true;
-      }
-    } catch {
-      // ignore
-    }
+    // 4. Windsurf: .windsurfrules
+    results.windsurfRules = this.injectDirective(
+      path.join(this.workspaceDir, '.windsurfrules'),
+      '# Windsurf AI Rules'
+    );
+
+    // 5. Cline: .clinerules
+    results.clineRules = this.injectDirective(
+      path.join(this.workspaceDir, '.clinerules'),
+      '# Cline Rules'
+    );
 
     return results;
   }
