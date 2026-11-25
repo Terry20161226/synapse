@@ -38,7 +38,7 @@
   "bugs": {
     "url": "https://github.com/Terry20161226/synapse/issues"
   },
-  "homepage": "https://github.com/Terry20161226/synapse#readme",
+  "homepage": "https://terry20161226.github.io/synapse",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.6.0",
     "zod": "^3.24.2"
